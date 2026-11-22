@@ -1,0 +1,20 @@
+# PocketBase on Render: one web service built from the Dockerfile, with a
+# persistent disk for pb_data (the SQLite database and uploaded files).
+projects:
+  - name: pocketbase
+    environments:
+      - name: production
+        services:
+          - type: web
+            name: pocketbase
+            runtime: docker
+            plan: starter
+            region: oregon
+            healthCheckPath: /api/health
+            # A disk can attach to one instance only, so this service can't
+            # scale out. Render also stops the old instance before starting
+            # the new one, so each deploy has a few seconds of downtime.
+            disk:
+              name: pb-data
+              mountPath: /pb/pb_data
+              sizeGB: 5
