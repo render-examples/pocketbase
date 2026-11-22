@@ -26,15 +26,18 @@ restarts.
 1. Click **Deploy to Render** above, or create a Blueprint in the Render
    Dashboard that points at this repository.
 2. When the deploy is live, open the `pocketbase` service's **Logs** in the
-   Render Dashboard. On first start, PocketBase prints a link like this:
+   Render Dashboard. On first start, PocketBase logs a one-time installer link:
 
    ```
-   https://<your-service>.onrender.com/_/#/pbinstal/<token>
+   http://0.0.0.0:10000/_/#/pbinstall/<token>
    ```
 
-   Replace `0.0.0.0:10000` in the logged link with your service URL if needed,
-   open it, and create the first superuser account. The link has a one-time
-   token, so only someone who can read the logs can use it.
+   Replace `http://0.0.0.0:10000` with your service URL, for example
+   `https://<your-service>.onrender.com/_/#/pbinstall/<token>`. Open it and
+   create the first superuser account. Only someone who can read the logs can
+   use the link. It expires after one hour; restart the service to log a new
+   one. You can also open the service's **Shell** tab and run
+   `/pb/pocketbase superuser upsert EMAIL PASSWORD --dir=/pb/pb_data`.
 3. Sign in to the dashboard at `https://<your-service>.onrender.com/_/`.
 
 The REST API is at `https://<your-service>.onrender.com/api/`. See the
